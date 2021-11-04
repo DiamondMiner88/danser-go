@@ -908,7 +908,7 @@ func (overlay *ScoreOverlay) initMods() {
 	alpha := settings.Gameplay.Mods.Opacity
 
 	offset := -48.0 * scale
-	if (settings.Gameplay.Mods.FoldVertically) {
+	if (settings.Gameplay.Mods.FoldVertically && settings.Gameplay.Mods.FoldInReplays) {
 		offset = 150 * scale
 	}
 
@@ -916,7 +916,7 @@ func (overlay *ScoreOverlay) initMods() {
 		modSpriteName := "selection-mod-" + strings.ToLower(s)
 
 		pos := vector.NewVec2d(overlay.ScaledWidth+offset, 150)
-		if (settings.Gameplay.Mods.FoldVertically) {
+		if (settings.Gameplay.Mods.FoldVertically && settings.Gameplay.Mods.FoldInReplays) {
 			pos = vector.NewVec2d(overlay.ScaledWidth-48, offset)
 		}
 
@@ -935,7 +935,7 @@ func (overlay *ScoreOverlay) initMods() {
 		}
 
 		showVertically := float64(1)
-		if (settings.Gameplay.Mods.FoldVertically) {
+		if (settings.Gameplay.Mods.FoldVertically && settings.Gameplay.Mods.FoldInReplays) {
 			showVertically = -1
 		}
 
