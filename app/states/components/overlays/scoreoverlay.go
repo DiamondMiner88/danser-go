@@ -940,7 +940,7 @@ func (overlay *ScoreOverlay) initMods() {
 		}
 
 		if overlay.cursor.Name == "" || settings.Gameplay.Mods.FoldInReplays {
-			offset -= 16 * scale * showVertically
+			offset -= settings.Gameplay.Mods.FoldSpacing * scale * showVertically
 		} else {
 			offset -= 80 * scale * showVertically
 		}

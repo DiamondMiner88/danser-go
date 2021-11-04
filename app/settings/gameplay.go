@@ -143,6 +143,7 @@ func initGameplay() *gameplay {
 			HideInReplays: false,
 			FoldInReplays: false,
 			FoldVertically: false,
+			FoldSpacing: 16.0,
 		},
 		Boundaries: &boundaries{
 			Enabled:         true,
@@ -283,4 +284,5 @@ type mods struct {
 	HideInReplays bool
 	FoldInReplays bool
 	FoldVertically bool
+	FoldSpacing float64
 }
