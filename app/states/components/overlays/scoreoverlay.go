@@ -908,10 +908,19 @@ func (overlay *ScoreOverlay) initMods() {
 	alpha := settings.Gameplay.Mods.Opacity
 
 	offset := -48.0 * scale
+	if (settings.Gameplay.Mods.FoldVertically) {
+		offset = 150 * scale
+	}
+
 	for i, s := range mods {
 		modSpriteName := "selection-mod-" + strings.ToLower(s)
 
-		mod := sprite.NewSpriteSingle(skin.GetTexture(modSpriteName), float64(i), vector.NewVec2d(overlay.ScaledWidth+offset, 150), vector.Centre)
+		pos := vector.NewVec2d(overlay.ScaledWidth+offset, 150)
+		if (settings.Gameplay.Mods.FoldVertically) {
+			pos = vector.NewVec2d(overlay.ScaledWidth-48, offset)
+		}
+
+		mod := sprite.NewSpriteSingle(skin.GetTexture(modSpriteName), float64(i), pos, vector.Centre)
 		mod.SetAlpha(0)
 		mod.ShowForever(true)
 
@@ -925,10 +934,15 @@ func (overlay *ScoreOverlay) initMods() {
 			mod.AddTransform(animation.NewSingleTransform(animation.Fade, easing.Linear, startT, startT+5000, 1.0*alpha, 0))
 		}
 
+		showVertically := float64(1)
+		if (settings.Gameplay.Mods.FoldVertically) {
+			showVertically = -1
+		}
+
 		if overlay.cursor.Name == "" || settings.Gameplay.Mods.FoldInReplays {
-			offset -= 16 * scale
+			offset -= 16 * scale * showVertically
 		} else {
-			offset -= 80 * scale
+			offset -= 80 * scale * showVertically
 		}
 
 		overlay.mods.Add(mod)

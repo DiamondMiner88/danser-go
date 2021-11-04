@@ -142,6 +142,7 @@ func initGameplay() *gameplay {
 			},
 			HideInReplays: false,
 			FoldInReplays: false,
+			FoldVertically: false,
 		},
 		Boundaries: &boundaries{
 			Enabled:         true,
@@ -281,4 +282,5 @@ type mods struct {
 	*hudElementOffset
 	HideInReplays bool
 	FoldInReplays bool
+	FoldVertically bool
 }
