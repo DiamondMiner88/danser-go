@@ -241,7 +241,7 @@ func run() {
 		newSettings := settings.LoadSettings(*settingsVersion)
 
 		if !newSettings && len(os.Args) == 1 {
-			platform.OpenURL("https://youtu.be/dQw4w9WgXcQ")
+			log.Println("No action specified, closing...")
 			closeAfterSettingsLoad = true
 		}
 
