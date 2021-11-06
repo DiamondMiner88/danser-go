@@ -193,7 +193,7 @@ func run() {
 			filepath := filepath.Join(settings.General.OsuReplaysDir, file.Name())
 			*replay = filepath
 
-			log.Println(fmt.Sprintf("Found newest replay: %s", file))
+			log.Println(fmt.Sprintf("Found newest replay: %s", filepath))
 		}
 
 		if *replay != "" {
@@ -222,7 +222,8 @@ func run() {
 			settings.REPLAY = *replay
 		}
 
-		if *noNightcore {
+		if *noNightcore && modsParsed & difficulty2.Nightcore != 0 {
+			log.Println("Disabling Nightcore (-nonightcore)")
 			modsParsed ^= difficulty2.Nightcore
 		}
 
