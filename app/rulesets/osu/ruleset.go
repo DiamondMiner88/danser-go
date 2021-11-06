@@ -351,7 +351,9 @@ func (set *OsuRuleSet) Update(time int64) {
 		table.Render()
 
 		for _, s := range strings.Split(tableString.String(), "\n") {
-			log.Println(s)
+			if len(s) > 0 {
+				log.Println(s)
+			}
 		}
 
 		set.ended = true
