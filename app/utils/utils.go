@@ -3,14 +3,16 @@ package utils
 import (
 	"archive/zip"
 	"fmt"
-	"github.com/wieku/danser-go/framework/assets"
-	"github.com/wieku/danser-go/framework/graphics/texture"
-	_ "golang.org/x/image/bmp"
 	"io"
+	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
+	"github.com/wieku/danser-go/framework/assets"
+	"github.com/wieku/danser-go/framework/graphics/texture"
+	_ "golang.org/x/image/bmp"
 )
 
 func getPixmap(name string) (*texture.Pixmap, error) {
@@ -111,4 +113,25 @@ func Unzip(src string, dest string) ([]string, error) {
 		}
 	}
 	return filenames, nil
+}
+
+// Find newest file in a directory
+func FindNewestFile(dir string) (newestFile os.FileInfo, err error) {
+	files, err := ioutil.ReadDir(dir)
+	if err != nil {
+		return
+	}
+
+	newestTime := time.UnixMilli(0)
+	for _, file := range files {
+		if file.Mode().IsRegular() && file.ModTime().After(newestTime) {
+			newestFile = file
+			newestTime = file.ModTime()
+		}
+	}
+
+	if newestFile == nil {
+		err = os.ErrNotExist
+	}
+	return
 }

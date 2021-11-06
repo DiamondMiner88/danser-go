@@ -20,6 +20,7 @@ func initGeneral() *general {
 	return &general{
 		OsuSongsDir:       filepath.Join(osuBaseDir, "Songs"),
 		OsuSkinsDir:       filepath.Join(osuBaseDir, "Skins"),
+		OsuReplaysDir:     filepath.Join(osuBaseDir, "Replays"),
 		DiscordPresenceOn: true,
 		UnpackOszFiles:    true,
 	}
@@ -32,6 +33,9 @@ type general struct {
 
 	// Directory that contains osu! skins,
 	OsuSkinsDir string
+
+	// Directory that contains osu! replays
+	OsuReplaysDir string
 
 	// Whether discord should show that danser is on
 	DiscordPresenceOn bool

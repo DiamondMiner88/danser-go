@@ -14,6 +14,20 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"image"
+	"io"
+	"io/ioutil"
+	"log"
+	"math"
+	"net/http"
+	"os"
+	"path/filepath"
+	"runtime"
+	"strconv"
+	"strings"
+	"time"
+	"unsafe"
+
 	"github.com/dustin/go-humanize"
 	"github.com/faiface/mainthread"
 	"github.com/go-gl/gl/v3.3-core/gl"
@@ -47,19 +61,6 @@ import (
 	"github.com/wieku/danser-go/framework/qpc"
 	"github.com/wieku/danser-go/framework/statistic"
 	"github.com/wieku/rplpa"
-	"image"
-	"io"
-	"io/ioutil"
-	"log"
-	"math"
-	"net/http"
-	"os"
-	"path/filepath"
-	"runtime"
-	"strconv"
-	"strings"
-	"time"
-	"unsafe"
 )
 
 const (
@@ -181,6 +182,20 @@ func run() {
 
 		modsParsed := difficulty2.ParseMods(*mods)
 
+		newSettings := settings.LoadSettings(*settingsVersion)
+
+		if *replay == "recent" {
+			file, err := utils.FindNewestFile(settings.General.OsuReplaysDir)
+			if err != nil {
+				panic(err)
+			}
+
+			filepath := filepath.Join(settings.General.OsuReplaysDir, file.Name())
+			*replay = filepath
+
+			log.Println(fmt.Sprintf("Found newest replay: %s", file))
+		}
+
 		if *replay != "" {
 			bytes, err := ioutil.ReadFile(*replay)
 			if err != nil {
@@ -237,8 +252,6 @@ func run() {
 		if settings.RECORD {
 			//bass.Offscreen = true
 		}
-
-		newSettings := settings.LoadSettings(*settingsVersion)
 
 		if !newSettings && len(os.Args) == 1 {
 			log.Println("No action specified, closing...")
